@@ -16,12 +16,32 @@
   </form>
 </br>
 
+<table border=1>
+    <tr>
+      <td>Vote</td>
+      <td>Point</td>
+      <td>Doint</td>
+      <td>Comment</td>
+      <td>User</td>
+      <% @particular_post.comments.each do |c| %>
+  <tr>
 
-<% @particular_post.comments.each do |p| %>
-<%= p.content %></br>
-<i>by <%= p.user.username %></i></br>
-</br>
-<% end %>
+    <td>
+        <% if !session[:user].nil? && c.commentvotes.where(user_id: session[:user].id).empty? %>
+        <form method=post action=/commentvote style=display:inline>
+          <input id="commentid" type=hidden name="comment_id" value="<%= c.id %>">
+          <input id="cupvote" type=submit name=value value="+">
+          <input id="cdownvote" type=submit name=value value="-">
+        </form>
+        <% end %>
+      </td>
+    <td><%= c.commentvotes.where(value: 1).count %></td>
+    <td><%= c.commentvotes.where(value: -1).count %></td>
+    <td><%= c.content %></td>
+    <td><%= c.user.username %></td>
+  </tr>
+    <% end %>
+</table>
 
 <div>
   <form method=post action=/logout style=display:inline>

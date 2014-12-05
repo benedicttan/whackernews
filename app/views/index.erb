@@ -32,12 +32,28 @@ Logged in as: <a href="/profile"><%= @user.username %></a>
 <h2>Recent Posts</h2>
 <table border=1>
   <tr>
+    <td width = "10%">Vote</td>
+    <td width>Points</td>
+    <td width>Doints</td>
     <td>Title</td>
     <td>Username</td>
     <td>Comments</td>
   </tr>
 <% posts.each do |p| %>
   <tr>
+    <td>
+      <% if !session[:user].nil? && p.postvotes.where(user_id: session[:user].id).empty? %>
+      <div id="votes">
+        <form method=post action=/vote style=display:inline>
+          <input id="postid" type=hidden name="post_id" value="<%= p.id %>">
+          <input id="upvote" type=submit name=value value="+">
+          <input id="downvote" type=submit name=value value="-">
+        </form>
+        <% end %>
+      </div>
+    </td>
+    <td><%= p.postvotes.where(value: 1).count %></td>
+    <td><%= p.postvotes.where(value: -1).count %></td>
     <td><a href="<%= p.external_url %>"><%= p.title %></a></td>
     <td><%= p.user.username %></td>
     <td><a href="/post/<%= p.id %>"><%= p.comments.count %></a></td>
