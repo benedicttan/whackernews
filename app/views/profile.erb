@@ -1,0 +1,39 @@
+<% if @user %>
+<h1> Username: <%= @user.username %></h1>
+<h2> Email: <%= @user.email %> </h2>
+<h2> Your posts: </h2>
+
+<% @user.posts.each do |p| %>
+<table border=0>
+  <tr>
+    <td><a href="<%= p.external_url %>"><%= p.title %></a></td>
+  </tr>
+</table>
+<% end %>
+</br>
+
+<h2> Your comments: </h2>
+<table border=1>
+  <tr>
+    <td>Post</td>
+    <td>Comment</td>
+  </tr>
+<% @user.comments.each do |c| %>
+  <tr>
+    <td><a href="/post/<%= c.post.id %>"><%= c.post.title %></a></td>
+    <td><%= c.content %></td>
+  </tr>
+  <% end %>
+</table>
+
+<% end %>
+
+<form method=get action=/newpost>
+    <input type=submit value="Create Post">
+</form>
+
+</br>
+
+<form method=post action=/logout>
+    <input type=submit value="Logout">
+</form>

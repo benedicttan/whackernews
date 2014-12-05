@@ -1,0 +1,52 @@
+<div class=container>
+<% if @message %>
+<h2 style=color:red><%= @message %></h2>
+</br><% end %>
+
+<% if @user %>
+Logged in as: <a href="/profile"><%= @user.username %></a>
+<% else %>
+
+  <div id="signin">
+    <h2>Sign up:</h2>
+    <form method=post action=/signup>
+      <input type=text placeholder="Email" name="user[email]"></br>
+      <input type=text placeholder="Username" name="user[username]"></br>
+      <input type=password placeholder="Password" name="user[password]"></br>
+      <input type=submit value="Sign up">
+    </form></br>
+    </br>
+  </div>
+
+  <div id ="login">
+    <h2>Log in:</h2>
+    <form method=post action=/login>
+      <input type=text placeholder="Username" name="login[username]"></br>
+      <input type=password placeholder="Password" name="login[password]"></br>
+      <input type=submit value="Log in">
+    </form></br>
+    </br>
+  </div>
+<% end %>
+
+<h2>Recent Posts</h2>
+<table border=1>
+  <tr>
+    <td>Title</td>
+    <td>Username</td>
+    <td>Comments</td>
+  </tr>
+<% posts.each do |p| %>
+  <tr>
+    <td><a href="<%= p.external_url %>"><%= p.title %></a></td>
+    <td><%= p.user.username %></td>
+    <td><a href="/post/<%= p.id %>"><%= p.comments.count %></a></td>
+  </tr>
+<% end %>
+
+</table></br>
+
+<form method=post action=/logout>
+    <input type=submit value="Logout">
+</form>
+</div>

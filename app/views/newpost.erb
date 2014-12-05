@@ -1,0 +1,7 @@
+<h2>Create Post</h2>
+<form method=post action=/newpost>
+    <input type=text placeholder="Post Title" name="post[title]"></br>
+    <input type=text placeholder="Post Link" name="post[external_url]"></br>
+    <input type=hidden name="post[user_id]" value="<%= @user.id %>">
+    <input type=submit value="Submit post">
+</form></br>

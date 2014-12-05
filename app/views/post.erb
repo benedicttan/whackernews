@@ -1,0 +1,35 @@
+<% if @message %>
+  <h2 style=color:red><%= @message %></h2>
+<% end %>
+
+<% if session[:user] %>
+  Logged in as: <a href="/profile"><%= @user.username %></a>
+<% end %>
+
+<h2><a href="<%= @particular_post.external_url %>"><%= @particular_post.title %></a></h2>
+</br>
+
+  <form method=post action=/comment>
+    <textarea placeholder="comments" name="comment"></textarea></br>
+    <input type=hidden name="post_id" value="<%= @particular_post.id %>">
+    <input type=submit value="Add Comment">
+  </form>
+</br>
+
+
+<% @particular_post.comments.each do |p| %>
+<%= p.content %></br>
+<i>by <%= p.user.username %></i></br>
+</br>
+<% end %>
+
+<div>
+  <form method=post action=/logout style=display:inline>
+    <input type=submit value="Logout">
+  </form>
+
+
+  <form method=get action=/ style=display:inline>
+    <input type=submit value="Home">
+  </form>
+</div>
